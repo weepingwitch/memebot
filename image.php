@@ -91,7 +91,7 @@ if (isset($_POST['mimg']) && $_POST['mimg'] != ""){
 
 
 
-$subimg = resize_image($file, 300,300);
+$subimg = resize_image($file, 325,325);
 
 // calculate some values
 $img_w = imagesx($subimg);
