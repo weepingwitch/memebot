@@ -30,8 +30,9 @@ function wrap($fontSize, $fontFace, $string, $width) {
 
 // for image resizing
 // stolen from http://stackoverflow.com/a/14649689
+// modified by willow to allow more than jpg images
 function resize_image($file, $w, $h, $crop=FALSE) {
-    list($width, $height) = getimagesize($file);
+    list($width, $height, $imgtype, $attr) = getimagesize($file);
     $r = $width / $height;
     if ($crop) {
         if ($width > $height) {
@@ -50,7 +51,22 @@ function resize_image($file, $w, $h, $crop=FALSE) {
             $newwidth = $w;
         }
     }
-    $src = imagecreatefromjpeg($file);
+$src = "";
+    switch (image_type_to_mime_type($imgtype)) {
+    case "image/gif":
+        $src = imagecreatefromgif($file);
+        break;
+    case "image/jpeg":
+        $src = imagecreatefromjpeg($file);
+        break;
+    case "image/png":
+        $src = imagecreatefrompng($file);
+        break;
+    case "image/bmp":
+        $src = imagecreatefrombmp($file);
+        break;
+      }
+
     $dst = imagecreatetruecolor($newwidth, $newheight);
     imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
     return $dst;
