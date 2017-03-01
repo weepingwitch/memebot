@@ -94,7 +94,7 @@ $text = "hello world";
 $text = wrap(20,$font, $text, 500);
 
 // Add the text
-imagettftext($im, 20, 0,10 ,30, $black, $font, $text);
+imagettftext($im, 15, 0,10 ,30, $black, $font, $text);
 
 // get the random image
 
