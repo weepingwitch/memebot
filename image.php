@@ -72,7 +72,24 @@ $black = imagecolorallocate($im, 0, 0, 0);
 imagefill($im, 0, 0, $white);
 
 // load our sub image
+
+// use random image
 $file = "img/" . rand(1,7) . ".jpg";
+
+// check if we should use custom image instead
+if (isset($_POST['mimg']) && $_POST['mimg'] != ""){
+  // check if it's a valid image
+  $file_headers = @get_headers($_POST['mimg']);
+  if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+      $exists = false;
+  }
+  else {
+      $file = $_POST['mimg'];
+  }
+
+}
+
+
 
 $subimg = resize_image($file, 300,300);
 
@@ -100,17 +117,23 @@ $source = file_get_contents("source.txt");
 $markov_table = generate_markov_table($source, 4);
 
 // generate the text
-$text =generate_markov_text(100, $markov_table, 4);
-$newtext = "";
-$textarray = explode(".",$text);
-foreach ($textarray as $line){
-  $line = strstr($line, " ");
-  $line = preg_replace('/\W\w+\s*(\W*)$/', '$1', $line);
-  $newtext = $newtext . $line;
+if (isset($_POST['mtext'])){
+  // use custom text
+  $text = $_POST['mtext'];
 }
-$text = $newtext;
-
-
+else
+{
+// use random text
+  $text = generate_markov_text(100, $markov_table, 4);
+  $newtext = "";
+  $textarray = explode(".",$text);
+  foreach ($textarray as $line){
+    $line = strstr($line, " ");
+    $line = preg_replace('/\W\w+\s*(\W*)$/', '$1', $line);
+    $newtext = $newtext . $line;
+  }
+  $text = $newtext;
+}
 
 // word-wrap the text
 $text = wrap(15,$font, $text, $canvas_w - 10);
@@ -118,14 +141,10 @@ $text = wrap(15,$font, $text, $canvas_w - 10);
 // Add the text
 imagettftext($im, 15, 0,10 ,30, $black, $font, $text);
 
-// get the random image
 
-
-
-// Set the content-type
-header('Content-Type: image/png');
-
-// Using imagepng() results in clearer text compared with imagejpeg()
-imagepng($im);
+ob_start(); // Start buffering the output
+imagepng($im, null, 0, PNG_NO_FILTER);
+$b64 = base64_encode(ob_get_contents()); // Get what we've just outputted and base64 it
 imagedestroy($im);
-?>
+ob_end_clean();// Using imagepng() results in clearer text compared with imagejpeg()
+echo '<img src="data:image/png;base64,'.$b64.'" style="border:1px solid black"/>';?>

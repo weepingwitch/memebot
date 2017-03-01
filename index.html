@@ -25,15 +25,16 @@
     margin-top:2px;
     text-align:center;
     width:350px;
-    height:480px;
     margin:auto;
     background-color:#eeeeee;
     border: 2px dashed gray;
     padding:4px;
+    overflow:hidden;
   }
   #source{
     float:right;
   }
+
   </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +45,19 @@
 </head>
 <body>
   <div id="container">
-  <button>Generate a meme!</button>
+  <button id="randmeme">Generate random meme!</button><button id="custmeme">Generate custom meme!</button>
+<div id="custom">
+  <BR>
+<form method="post" id="custmemeform" action="image.php">
+  <label for="mtext">meme text</label>
+       <BR><input type="text" name="mtext" id="mtext" placeholder="witty original comment" style="width:90%">
+       <BR><BR>
+   <label for="mimg">meme image</label>
+        <BR><input type="text" name="mimg" id="mimg" placeholder="humorous image url" style="width:90%"><BR>
+    <BR><input id="custmemesubmit" type="submit" value="generate">
+</form>
+</div>
+
 <BR><BR>
   <div id="meme"></div>
   <BR>
@@ -52,12 +65,42 @@
 </div>
 
 <script>
+
 $(document).ready(function() {
-  $("button").click(function() {
-    d = new Date();
-    var imgUrl = "image.php?" + +d.getTime() + ".png";
-    $("#meme").html("<img src='" + imgUrl + "' alt='your freshly-generated meme' style='border: 2px solid black;'/>");
+
+  $("#custom").hide();
+
+  $("#randmeme").click(function() {
+
+    $("#meme").load("image.php");
   });
+
+
+  $("#custmeme").click(function() {
+    $("#custom").show();
+  });
+
+
+
+
+      $('#custmemeform').submit(function (e) {
+          e.preventDefault();
+          $.ajax({
+              url: "image.php",
+              type: "POST",
+              data: $("#custmemeform").serialize(),
+              success: function (data) {
+                  $("#meme").html(data);
+              },
+              error: function (jXHR, textStatus, errorThrown) {
+                  $("#meme").html("sorry, we had a bug :(");
+              }
+          }); // AJAX Get Jquery statment
+      });
+
+
+
+
 });
 </script>
 
