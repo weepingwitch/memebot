@@ -1,4 +1,7 @@
 <?php
+//for generating text
+// modified from https://github.com/hay/markov
+require 'markov.php';
 
 
 // for word wrapping
@@ -70,7 +73,7 @@ imagefill($im, 0, 0, $white);
 
 // load our sub image
 $file = "img/" . rand(1,7) . ".jpg";
-error_log($file);
+
 $subimg = resize_image($file, 300,300);
 
 // calculate some values
@@ -89,9 +92,28 @@ imagecopy($im, $subimg, $xoffset, $yoffset, 0,0,$img_w, $img_h);
 // set up the font
 $font = '/var/www/html/tuftsmemebot/comicsans.ttf';
 
-// The text to draw
-$text = "hello world";
-$text = wrap(20,$font, $text, 500);
+
+// read in source text
+$source = file_get_contents("source.txt");
+
+// generate the markov table
+$markov_table = generate_markov_table($source, 4);
+
+// generate the text
+$text =generate_markov_text(100, $markov_table, 4);
+$newtext = "";
+$textarray = explode(".",$text);
+foreach ($textarray as $line){
+  $line = strstr($line, " ");
+  $line = preg_replace('/\W\w+\s*(\W*)$/', '$1', $line);
+  $newtext = $newtext . $line;
+}
+$text = $newtext;
+
+
+
+// word-wrap the text
+$text = wrap(15,$font, $text, $canvas_w - 10);
 
 // Add the text
 imagettftext($im, 15, 0,10 ,30, $black, $font, $text);
