@@ -68,37 +68,37 @@
 
 $(document).ready(function() {
 
+// hide the custom meme form util it's needed
   $("#custom").hide();
 
+
+// generate a random meme
   $("#randmeme").click(function() {
       $("#custom").hide();
     $("#meme").load("image.php");
   });
 
-
+// show the custom meme form
   $("#custmeme").click(function() {
     $("#custom").show();
   });
 
 
-
-
-      $('#custmemeform').submit(function (e) {
-          e.preventDefault();
-          $.ajax({
-              url: "image.php",
-              type: "POST",
-              data: $("#custmemeform").serialize(),
-              success: function (data) {
-                  $("#meme").html(data);
-              },
-              error: function (jXHR, textStatus, errorThrown) {
-                  $("#meme").html("sorry, we had a bug :(");
-              }
-          }); // AJAX Get Jquery statment
-      });
-
-
+// generate a custom meme
+  $('#custmemeform').submit(function (e) {
+      e.preventDefault();
+      $.ajax({
+          url: "image.php",
+          type: "POST",
+          data: $("#custmemeform").serialize(),
+          success: function (data) {
+              $("#meme").html(data);
+          },
+          error: function (jXHR, textStatus, errorThrown) {
+              $("#meme").html("sorry, we had a bug :(");
+          }
+      }); 
+  });
 
 
 });
