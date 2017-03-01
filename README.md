@@ -1,5 +1,5 @@
-# monacomemes
-a bot that generates memes about the tufts president
+# memebot
+a bot that generates tufts memes
 
 it's still really shitty right now, but i hope to gradually improve it
 
