@@ -1,0 +1,43 @@
+<html>
+<head>
+  <style type="text/css">
+  body {
+    width: 100%;
+    height: 100%;
+    font-family:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: black;
+    background-color: #dddddd;
+  }
+  html {
+    width: 100%;
+    height: 100%;
+  }
+  </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="tufts meme generator">
+<meta name="author" content="willow carter">
+
+<title>tufts meme generator</title>
+</head>
+<body>
+  <div id="container">
+  <button>Generate a meme!</button>
+<BR><BR>
+  <div id="meme" style="width:350px;height:400px;"></div>
+  <div id="source"><A href=""</div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $("button").click(function() {
+    d = new Date();
+    var imgUrl = "image.php?" + +d.getTime() + ".png";
+    $("#meme").html("<img src='" + imgUrl + "' alt='your freshly-generated meme' style='border: 2px solid black;'/>");
+  });
+});
+</script>
+
+
+</body>
+</html>
