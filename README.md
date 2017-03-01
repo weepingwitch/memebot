@@ -1,5 +1,5 @@
 # memebot
-a bot for generating tufts moz-keyframes
+a bot for generating tufts memes
 
 live demo: http://willow.lol/tuftsmemes
 
