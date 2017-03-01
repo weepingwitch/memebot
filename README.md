@@ -1,4 +1,4 @@
-# tuftsmemebot
-a bot that generates tufts memes
+# monacomemes
+a bot that generates memes about the tufts president
 
 live demo: [http://willow.lol/tuftsmemebot/]

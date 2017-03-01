@@ -90,7 +90,7 @@ imagecopy($im, $subimg, $xoffset, $yoffset, 0,0,$img_w, $img_h);
 
 
 // set up the font
-$font = '/var/www/html/tuftsmemebot/comicsans.ttf';
+$font = '/var/www/html/monacomemes/comicsans.ttf';
 
 
 // read in source text
