@@ -1,7 +1,15 @@
 <?php
+
+// for BETTER generation of text
+// written by willow
+require 'memegeneration.php';
+
+
 //for generating text
 // modified from https://github.com/hay/markov
 require 'markov.php';
+
+
 
 
 // for word wrapping
@@ -121,7 +129,7 @@ imagecopy($im, $subimg, $xoffset, $yoffset, 0,0,$img_w, $img_h);
 
 
 // set up the font
-$font = '/var/www/html/tuftsmemes/comicsans.ttf';
+$font = getcwd() . '/comicsans.ttf';
 
 
 // read in source text
@@ -137,6 +145,10 @@ if (isset($_POST['mtext'])){
 }
 else
 {
+
+$text = makememe();
+
+  /*
 // use random text
   $text = generate_markov_text(100, $markov_table, 4);
   $newtext = "";
@@ -147,6 +159,8 @@ else
     $newtext = $newtext . $line;
   }
   $text = $newtext;
+*/
+
 }
 
 // word-wrap the text

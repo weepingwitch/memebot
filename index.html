@@ -95,9 +95,9 @@ $(document).ready(function() {
               $("#meme").html(data);
           },
           error: function (jXHR, textStatus, errorThrown) {
-              $("#meme").html("sorry, we had a bug :(");
+              $("#meme").html("sorry, we had a bug :( " + errorThrown);
           }
-      }); 
+      });
   });
 
 
